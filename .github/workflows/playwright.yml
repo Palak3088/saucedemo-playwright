@@ -1,0 +1,72 @@
+name: Playwright Tests
+
+# Trigger this workflow on every push to main and on every pull request
+# that targets main. Pull-request runs use the PR branch's code, so you
+# get feedback before anything merges.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    # Use the latest stable Ubuntu runner provided by GitHub.
+    # Playwright's --with-deps flag (used below) installs the correct
+    # system libraries for this distro automatically.
+    runs-on: ubuntu-latest
+
+    # Kill the job if it hasn't finished in 30 minutes. Prevents a hung
+    # browser from burning Actions minutes indefinitely.
+    timeout-minutes: 30
+
+    steps:
+      # 1. Check out the repository so the runner has the source code.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Install the Node.js version declared below and restore the npm
+      #    cache from previous runs. cache: 'npm' caches ~/.npm using
+      #    package-lock.json as the cache key — a lockfile change busts it.
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # 3. `npm ci` installs exactly what is in package-lock.json.
+      #    Unlike `npm install` it never updates the lockfile and always
+      #    starts from a clean node_modules, which makes CI builds
+      #    reproducible.
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Download Chromium, Firefox, and WebKit binaries plus the OS-level
+      #    libraries each browser needs (fonts, codecs, etc.).
+      #    --with-deps is essential on Ubuntu: without it the browsers
+      #    launch but immediately crash due to missing system packages.
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      # 5. Run the full test suite. GitHub Actions sets CI=true automatically,
+      #    which our config reads to apply CI-specific settings:
+      #      - workers: 1        (single worker, no CPU contention)
+      #      - forbidOnly: true  (fail if test.only was committed)
+      #    The exit code is non-zero on any test failure, which marks the
+      #    workflow run as failed and blocks the PR from merging.
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      # 6. Upload the HTML report regardless of whether the tests passed or
+      #    failed. `if: always()` overrides the default behaviour, which
+      #    would skip this step whenever a previous step has failed.
+      #    The report is downloadable from the workflow summary page for
+      #    30 days. View it by unzipping and opening index.html, or run:
+      #    npx playwright show-report <unzipped-folder>
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
