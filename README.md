@@ -98,6 +98,15 @@ saucedemo-playwright/
 
 ---
 
+## Prerequisites
+
+- [Node.js](https://nodejs.org) 20 or later (the CI pipeline runs on Node 20)
+- npm (bundled with Node.js)
+
+Playwright downloads its own browser binaries in the install step below — no separate browser installation is needed.
+
+---
+
 ## How to Run
 
 ```bash
@@ -141,5 +150,5 @@ Built with Playwright + TypeScript using an AI-assisted workflow (Claude Code) f
 
 ## About
 
-QA/Automation Engineer focused on building reliable, maintainable test frameworks
-[LinkedIn]- (https://www.linkedin.com/in/palakagarwal3088/)
+QA/Automation Engineer focused on building reliable, maintainable test frameworks — 
+[LinkedIn](https://www.linkedin.com/in/palakagarwal3088/)
