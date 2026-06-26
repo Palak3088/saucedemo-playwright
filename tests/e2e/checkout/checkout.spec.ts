@@ -1,28 +1,23 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/LoginPage';
+import { test, expect } from '../../fixtures/auth.fixture';
 import { InventoryPage } from '../../pages/InventoryPage';
 import { CartPage } from '../../pages/CartPage';
 import { CheckoutPage } from '../../pages/CheckoutPage';
-import { USERS } from '../../../test-data/users';
 
 test.describe('Checkout', () => {
   let checkoutPage: CheckoutPage;
 
-  // Drives every test to the checkout info form (step one).
-  // Each test then continues the flow from that shared starting point.
-  test.beforeEach(async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.goto();
-    await loginPage.login(USERS.standard.username, USERS.standard.password);
-
-    const inventoryPage = new InventoryPage(page);
+  // The authenticatedPage fixture injects a saved session and lands on the
+  // inventory page — no UI login required. Each test starts from the checkout
+  // info form (step one) with one item already in the cart.
+  test.beforeEach(async ({ authenticatedPage }) => {
+    const inventoryPage = new InventoryPage(authenticatedPage);
     await inventoryPage.addItemToCart('Sauce Labs Backpack');
     await inventoryPage.goToCart();
 
-    const cartPage = new CartPage(page);
+    const cartPage = new CartPage(authenticatedPage);
     await cartPage.checkout();
 
-    checkoutPage = new CheckoutPage(page);
+    checkoutPage = new CheckoutPage(authenticatedPage);
   });
 
   test(
@@ -61,7 +56,7 @@ test.describe('Checkout', () => {
   test(
     'order overview lists the correct number of items before finishing',
     { tag: '@regression' },
-    async ({ page }) => {
+    async ({ authenticatedPage }) => {
       await checkoutPage.fillInfo({
         firstName: 'Jane',
         lastName: 'Doe',
@@ -70,8 +65,8 @@ test.describe('Checkout', () => {
       await checkoutPage.continue();
 
       // One item was added in beforeEach — the overview must reflect exactly that
-      await expect(page.getByTestId('inventory-item')).toHaveCount(1);
-      await expect(page.getByText('Sauce Labs Backpack')).toBeVisible();
+      await expect(authenticatedPage.getByTestId('inventory-item')).toHaveCount(1);
+      await expect(authenticatedPage.getByText('Sauce Labs Backpack')).toBeVisible();
     },
   );
 });
