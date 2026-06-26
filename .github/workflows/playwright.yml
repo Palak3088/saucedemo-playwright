@@ -41,14 +41,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4. Download Chromium, Firefox, and WebKit binaries plus the OS-level
+      # 4. Compile every .ts file with no output, purely to surface type errors.
+      #    Playwright runs tests even when the types are wrong, so this step
+      #    catches mistakes the test run would silently skip. A type error here
+      #    fails the build before any browser is even installed.
+      - name: Type-check
+        run: npm run typecheck
+
+      # 5. Download Chromium, Firefox, and WebKit binaries plus the OS-level
       #    libraries each browser needs (fonts, codecs, etc.).
       #    --with-deps is essential on Ubuntu: without it the browsers
       #    launch but immediately crash due to missing system packages.
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # 5. Run the full test suite. GitHub Actions sets CI=true automatically,
+      # 6. Run the full test suite. GitHub Actions sets CI=true automatically,
       #    which our config reads to apply CI-specific settings:
       #      - workers: 1        (single worker, no CPU contention)
       #      - forbidOnly: true  (fail if test.only was committed)
@@ -57,7 +64,7 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
 
-      # 6. Upload the HTML report regardless of whether the tests passed or
+      # 7. Upload the HTML report regardless of whether the tests passed or
       #    failed. `if: always()` overrides the default behaviour, which
       #    would skip this step whenever a previous step has failed.
       #    The report is downloadable from the workflow summary page for

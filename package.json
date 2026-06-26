@@ -1,17 +1,26 @@
 {
   "name": "saucedemo-playwright",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "End-to-end test suite for the SauceDemo web app, built with Playwright and TypeScript — Page Object Model, reusable fixtures, and cross-browser CI via GitHub Actions.",
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
-    "report": "playwright show-report"
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "playwright",
+    "typescript",
+    "test-automation",
+    "qa-automation",
+    "e2e-testing",
+    "page-object-model",
+    "github-actions",
+    "ci-cd"
+  ],
+  "author": "Palak Agarwal",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
