@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell(npm install *)",
-      "PowerShell(New-Item *)"
-    ]
-  }
-}
