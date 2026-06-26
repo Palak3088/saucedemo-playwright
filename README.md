@@ -8,7 +8,7 @@ End-to-end test suite for [SauceDemo](https://www.saucedemo.com), built with Pla
 
 ## Overview
 
-This project demonstrates a maintainable, scalable E2E automation architecture: a Page Object Model, typed test data, a reusable authentication fixture, and a three-browser CI pipeline via GitHub Actions. It is tested against the SauceDemo demo e-commerce application, covering the full user journey from login through to order confirmation.
+This project demonstrates a maintainable, scalable E2E automation architecture: a Page Object Model, typed test data, a reusable authentication fixture, and a three-browser CI pipeline via GitHub Actions. It is tested against the SauceDemo demo e-commerce application, covering the full user journey from login through to order confirmation. On failure, the suite automatically captures a Playwright trace, a full-page screenshot, and a video recording — making CI failures debuggable without re-running locally.
 
 ---
 
@@ -129,7 +129,7 @@ npx playwright show-report
 
 ## Continuous Integration
 
-The suite runs automatically on every push and pull request to `main` via GitHub Actions. The workflow runs all 48 tests (16 tests × 3 browsers) on Ubuntu, installs browser binaries with system dependencies, and uploads the HTML report as a downloadable artifact for 30 days — available from the workflow summary page whether the run passed or failed.
+The suite runs automatically on every push and pull request to `main` via GitHub Actions. The workflow type-checks all TypeScript first (a type error fails the build before any test runs), then runs all 48 tests (16 tests × 3 browsers) on Ubuntu, installs browser binaries with system dependencies, and uploads the HTML report as a downloadable artifact for 30 days — available from the workflow summary page whether the run passed or failed.
 
 ---
 
@@ -141,4 +141,5 @@ Built with Playwright + TypeScript using an AI-assisted workflow (Claude Code) f
 
 ## About
 
-QA/Automation Engineer passionate about building reliable, maintainable test frameworks — [LinkedIn](https://www.linkedin.com/in/palakagarwal3088/)
+QA/Automation Engineer focused on building reliable, maintainable test frameworks
+[LinkedIn]- (https://www.linkedin.com/in/palakagarwal3088/)
