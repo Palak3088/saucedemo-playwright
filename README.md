@@ -2,13 +2,13 @@
 
 [![Playwright Tests](https://github.com/Palak3088/saucedemo-playwright/actions/workflows/playwright.yml/badge.svg)](https://github.com/Palak3088/saucedemo-playwright/actions/workflows/playwright.yml)
 
-End-to-end test suite for [SauceDemo](https://www.saucedemo.com), built with Playwright and TypeScript — authored using an AI-assisted workflow with Claude Code.
+End-to-end test suite for [SauceDemo](https://www.saucedemo.com), built with Playwright and TypeScript.
 
 ---
 
 ## Overview
 
-This project demonstrates production-grade E2E automation engineering: a Page Object Model architecture, typed test data, a reusable authentication fixture, and a three-browser CI pipeline via GitHub Actions. It is tested against the SauceDemo demo e-commerce application, covering the full user journey from login through to order confirmation. The suite was built using Claude Code as an AI pair-programming assistant, combining AI-accelerated authoring with deliberate QA judgement on test design, coverage, and locator strategy.
+This project demonstrates a maintainable, scalable E2E automation architecture: a Page Object Model, typed test data, a reusable authentication fixture, and a three-browser CI pipeline via GitHub Actions. It is tested against the SauceDemo demo e-commerce application, covering the full user journey from login through to order confirmation.
 
 ---
 
@@ -20,7 +20,6 @@ This project demonstrates production-grade E2E automation engineering: a Page Ob
 | TypeScript | Type-safe test and page object code |
 | Page Object Model | Encapsulates locators and actions per page |
 | GitHub Actions | CI pipeline across Chromium, Firefox, and WebKit |
-| Claude Code | AI-assisted authoring and pair programming |
 
 ---
 
@@ -134,9 +133,9 @@ The suite runs automatically on every push and pull request to `main` via GitHub
 
 ---
 
-## AI-Assisted Development
+## Development notes
 
-This project was built using [Claude Code](https://claude.ai/code) as an AI pair-programming assistant. Claude accelerated the authoring of page objects, fixture setup, test scaffolding, and CI configuration. All test design decisions — coverage scope, locator strategy, assertion depth, fixture architecture, and project structure — reflect my own QA engineering judgement. The result demonstrates a modern AI-assisted automation workflow: faster to build, without compromising on quality or rigour.
+Built with Playwright + TypeScript using an AI-assisted workflow (Claude Code) for scaffolding and boilerplate. Architecture, coverage scope, and locator/fixture strategy are my own design decisions.
 
 ---
 
